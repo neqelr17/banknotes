@@ -1,0 +1,21 @@
+[
+    {
+        "user_name": "neqel",
+        "first_name": "Brett",
+        "middle_name": "R",
+        "last_name": "Ward",
+        "password": "saucy"
+    },
+    {"user_name": "toothless",
+        "first_name": "Ezery",
+        "middle_name": "Snow",
+        "last_name": "Fairchild",
+        "password": "matrix"
+    },
+    {"user_name": "chewy",
+        "first_name": "Han",
+        "middle_name": "",
+        "last_name": "Solo",
+        "password": "helix"
+    }
+]

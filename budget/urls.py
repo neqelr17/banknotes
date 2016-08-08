@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from books.views import PublisherList
+from budget.views import PublisherList
 
 urlpatterns = [
     url(r'^$', PublisherList.as_view()),

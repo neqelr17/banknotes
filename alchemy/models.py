@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""SQLalchemy modles for budget app.
+"""SQLalchemy models for budget app.
 
 This is the database interation model. To interact with the database,
 create a engine specific model that can use these models.
 """
 
 import datetime
-import errno
-import os
 from hashlib import sha1, sha256
 
 
@@ -64,7 +62,8 @@ class User(BASE):
             self.first_name,
             self.created)
 
-    def create_salt(self):
+    @staticmethod
+    def create_salt():
         """Create a new salt value."""
         return sha1(
             str(datetime.datetime.utcnow()).encode(ENCODING)).hexdigest()

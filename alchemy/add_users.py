@@ -7,7 +7,6 @@ This will require us to import the table class from models.
 
 
 import json
-import sys
 
 
 # import 3rd party

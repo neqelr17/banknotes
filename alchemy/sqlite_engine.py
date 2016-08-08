@@ -48,8 +48,8 @@ def remove_test_db(filename):
     """Quietly removes the database file if it exists."""
     try:
         os.remove(filename)
-    except OSError as e:
-        if e.errno != errno.ENOENT:
+    except OSError as exc:
+        if exc.errno != errno.ENOENT:
             raise
     else:
         print('Old database file removed.')
@@ -65,10 +65,10 @@ def session_scope():
     try:
         yield session
         session.commit()
-    except Exception as e:
-        print(e)
+    except Exception as exc:
+        print(exc)
         session.rollback()
-        raise e
+        raise exc
     finally:
         session.close()
 

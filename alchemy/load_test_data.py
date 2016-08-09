@@ -20,7 +20,7 @@ from sqlite_engine import session_scope
 __author__ = 'Brett R. Ward'
 
 # Constants
-USER_LIST = 'users.json'
+USER_LIST = 'test_data.json'
 
 
 def main():

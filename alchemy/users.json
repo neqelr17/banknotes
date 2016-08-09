@@ -1,21 +1,64 @@
-[
-    {
-        "user_name": "neqel",
-        "first_name": "Brett",
-        "middle_name": "R",
-        "last_name": "Ward",
-        "password": "saucy"
-    },
-    {"user_name": "toothless",
-        "first_name": "Ezery",
-        "middle_name": "Snow",
-        "last_name": "Fairchild",
-        "password": "matrix"
-    },
-    {"user_name": "chewy",
-        "first_name": "Han",
-        "middle_name": "",
-        "last_name": "Solo",
-        "password": "helix"
-    }
-]
+{
+    "users": [
+        {
+            "user_name": "neqel",
+            "first_name": "Brett",
+            "middle_name": "R",
+            "last_name": "Ward",
+            "password": "saucy"
+        },
+        {"user_name": "toothless",
+            "first_name": "Ezery",
+            "middle_name": "Snow",
+            "last_name": "Fairchild",
+            "password": "matrix"
+        },
+        {"user_name": "chewy",
+            "first_name": "Han",
+            "middle_name": "",
+            "last_name": "Solo",
+            "password": "helix"
+        }
+    ],
+    "groups": [
+        {
+            "name": "Food"
+        },
+        {
+            "name": "Auto"
+        }
+    ],
+    "budgets": [
+        {
+            "name": "Fast Food"
+        },
+        {
+            "name": "Groceries"
+        },
+        {
+            "name": "Gas"
+        }
+    ],
+    "transactions": [
+        {
+            "name": "Macys"
+        },
+        {
+            "name": "Maverick"
+        }
+    ],
+    "items": [
+        {
+            "name": "Macys",
+            "amount": "12500"
+        },
+        {
+            "name": "Maverrick",
+            "amount": "1299"
+        },
+        {
+            "name": "Maverrick",
+            "amount": "3999"
+        }
+    ]
+}

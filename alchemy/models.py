@@ -12,13 +12,8 @@ from hashlib import sha1, sha256
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
-from sqlalchemy import (
-    Column,
-    DateTime,
-    ForeignKey,
-    Integer,
-    Sequence,
-    String)
+from sqlalchemy import Column, ForeignKey, Sequence
+from sqlalchemy.types import DateTime, Integer, String
 
 
 __author__ = 'Brett R. Ward'
@@ -54,11 +49,15 @@ class User(BASE):
         self.password = self.get_password(self.password)
 
     def __str__(self):
-        """Print user pretty when called as a string."""
+        """Print User pretty when called as a string."""
         return '<User(user_name={}, first_name={}, created={})>'.format(
             self.user_name,
             self.first_name,
             self.created)
+
+    def __repr__(self):
+        """Print User pretty when called in python repl."""
+        return self.__str__()
 
     @staticmethod
     def create_salt():
@@ -88,6 +87,14 @@ class BudgetGroup(BASE):
     budgets = relationship(
         'Budget', order_by='asc(Budget.id)', backref='budget_group')
 
+    def __str__(self):
+        """Print BudgetGroup pretty when called as a string."""
+        return 'BudgetGroup<id={}, name={}>'.format(self.id, self.name)
+
+    def __repr__(self):
+        """Print BudgetGroup pretty when called in python repl."""
+        return self.__str__()
+
 
 class Budget(BASE):
     """Itemization's are categorized in budgets."""
@@ -101,6 +108,17 @@ class Budget(BASE):
 
     # Relationships
     items = relationship('Item', order_by='asc(Item.id)', backref='budget')
+
+    def __str__(self):
+        """Print Budget pretty when called as a string."""
+        return 'Budget<id={}, name={}, group={}>'.format(
+            self.id,
+            self.name,
+            self.budget_group.name)
+
+    def __repr__(self):
+        """Print Budget pretty when called in python repl."""
+        return self.__str__()
 
 
 class Transaction(BASE):
@@ -118,7 +136,19 @@ class Transaction(BASE):
     date = Column(DateTime)
 
     # Relationships
-    items = relationship('Item', order_by='asc(Item.id)', backref='transaction')
+    items = relationship(
+        'Item', order_by='asc(Item.id)', backref='transaction')
+
+    def __str__(self):
+        """Print Transaction pretty when called as a string."""
+        return 'Transaction<id={}, name={}>'.format(
+            self.id,
+            self.name
+            )
+
+    def __repr__(self):
+        """Print Transaction pretty when called in python repl."""
+        return self.__str__()
 
 
 class Item(BASE):
@@ -132,3 +162,25 @@ class Item(BASE):
     transaction_id = Column(Integer, ForeignKey('transactions.id'))
     name = Column(String(64), nullable=False)
     amount_in_cents = Column(Integer)
+
+    def __str__(self):
+        """Print Item pretty when called as a string."""
+        return 'Item<id={}, name={}, amount=${:.2f}>'.format(
+            self.id,
+            self.name,
+            self.amount
+            )
+
+    def __repr__(self):
+        """Print Item pretty when called in python repl."""
+        return self.__str__()
+
+    @property
+    def amount(self):
+        """Return dollar amount."""
+        return self.amount_in_cents / 100
+
+    @amount.setter
+    def amount(self, amount):
+        """Set amount_in_cents from a dollar amount."""
+        self.amount_in_cents = amount * 100

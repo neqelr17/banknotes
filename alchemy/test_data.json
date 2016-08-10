@@ -22,43 +22,57 @@
     ],
     "groups": [
         {
-            "name": "Food"
+            "name": "Food",
+            "budgets": [
+                {
+                    "name": "Fast Food",
+                    "amount": "50.00"
+                },
+                {
+                    "name": "Groceries",
+                    "amount": "100.50"
+                }
+            ]
         },
         {
-            "name": "Auto"
-        }
-    ],
-    "budgets": [
-        {
-            "name": "Fast Food"
-        },
-        {
-            "name": "Groceries"
-        },
-        {
-            "name": "Gas"
+            "name": "Auto",
+            "budgets": [
+                {
+                    "name": "Gas",
+                    "amount": "80.00"
+                }
+            ]
         }
     ],
     "transactions": [
         {
-            "name": "Macys"
-        },
-        {
-            "name": "Maverick"
-        }
-    ],
-    "items": [
-        {
             "name": "Macys",
-            "amount": "12500"
+            "user": "neqel",
+            "date": "2016-08-10 18:52:15.331920",
+            "items": [
+                {
+                    "name": "Macys",
+                    "amount": "12500",
+                    "budget": "Groceries"
+                }
+            ]
         },
         {
-            "name": "Maverrick",
-            "amount": "1299"
-        },
-        {
-            "name": "Maverrick",
-            "amount": "3999"
+            "name": "Maverick",
+            "user": "chewy",
+            "date": "2016-08-9 18:52:15.331920",
+            "items": [
+                {
+                    "name": "Maverrick",
+                    "amount": "1299",
+                    "budget": "Fast Food"
+                },
+                {
+                    "name": "Maverrick",
+                    "amount": "3999",
+                    "budget": "Gas"
+                }
+            ]
         }
     ]
 }

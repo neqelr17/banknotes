@@ -48,6 +48,10 @@ class User(BASE):
         self.salt = self.create_salt()
         self.password = self.get_password(self.password)
 
+    # Relationships
+    transactions = relationship(
+        'Transaction', order_by='desc(Transaction.date)', backref='user')
+
     def __str__(self):
         """Print User pretty when called as a string."""
         return '<User(user_name={}, first_name={}, created={})>'.format(
@@ -105,6 +109,7 @@ class Budget(BASE):
     id = Column(Integer, Sequence('budget_id'), primary_key=True)
     group_id = Column(Integer, ForeignKey('budget_groups.id'))
     name = Column(String(64), nullable=False)
+    budget_amount_in_cents = Column(Integer)
 
     # Relationships
     items = relationship('Item', order_by='asc(Item.id)', backref='budget')
@@ -120,6 +125,16 @@ class Budget(BASE):
         """Print Budget pretty when called in python repl."""
         return self.__str__()
 
+    @property
+    def budget_amount(self):
+        """Return dollar budget_amount."""
+        return self.amount_in_cents / 100
+
+    @budget_amount.setter
+    def budget_amount(self, budget_amount):
+        """Set amount_in_cents from a dollar budget_amount."""
+        self.budget_amount_in_cents = float(budget_amount) * 100
+
 
 class Transaction(BASE):
     """A transaction that can be related to a physical receipt or bank account.
@@ -132,6 +147,7 @@ class Transaction(BASE):
 
     # Columns
     id = Column(Integer, Sequence('transaction_id'), primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
     name = Column(String(64), nullable=False)
     date = Column(DateTime)
 
@@ -183,4 +199,4 @@ class Item(BASE):
     @amount.setter
     def amount(self, amount):
         """Set amount_in_cents from a dollar amount."""
-        self.amount_in_cents = amount * 100
+        self.amount_in_cents = float(amount) * 100

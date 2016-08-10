@@ -56,49 +56,42 @@ def main():
             add_budgets(data, session)
 
 
+def insert_test_data():
+    """Insert Data into test database."""
+    with open(TEST_DATA, 'r') as fh_users:
+        data = json.load(fh_users)
+    with session_scope() as session:
+        add_users(data, session)
+        add_budgets(data, session)
+
+
 def add_budgets(data, session):
     """Add budgets from json file.
 
     Used for development to import test data to database.
     """
-    # Groups
-    food_group = BudgetGroup(name=data['groups'][0]['name'])
-    auto_group = BudgetGroup(name=data['groups'][1]['name'])
+    # Add Groups
+    for group in data['groups']:
+        budget_group = BudgetGroup(name=group['name'])
+        for budget in group['budgets']:
+            temp_budget = Budget(name=budget['name'])
+            temp_budget.budget_amount = budget['amount']
+            temp_budget.budget_group = budget_group
+            session.add(temp_budget)
 
-    # Budgets
-    fast_food = Budget(name=data['budgets'][0]['name'])
-    fast_food.budget_group = food_group
-    groceries = Budget(name=data['budgets'][1]['name'])
-    groceries.budget_group = food_group
-    gas = Budget(name=data['budgets'][2]['name'])
-    gas.budget_group = auto_group
-
-    # Transactions
-    macys = Transaction(name=data['transactions'][0]['name'])
-    macys.date = datetime.utcnow()
-    maverick = Transaction(name=data['transactions'][1]['name'])
-    maverick.date = datetime.utcnow()
-
-    # Items
-    macy_gro = Item(
-        name=data['items'][0]['name'],
-        amount_in_cents=data['items'][0]['amount'])
-    macy_gro.budget = groceries
-    macy_gro.transaction = macys
-    maverrick_food = Item(
-        name=data['items'][1]['name'],
-        amount_in_cents=data['items'][1]['amount'])
-    maverrick_food.budget = fast_food
-    maverrick_food.transaction = maverick
-    maverrick_gas = Item(
-        name=data['items'][2]['name'],
-        amount_in_cents=data['items'][2]['amount'])
-    maverrick_gas.budget = gas
-    maverrick_gas.transaction = maverick
-
-    session.add(macy_gro)
-    session.add(maverrick_food)
-    session.add(maverrick_gas)
+    # Add Transactions
+    for tran in data['transactions']:
+        transaction = Transaction(
+            name=tran['name'],
+            date=datetime.strptime(tran['date'], '%Y-%m-%d %H:%M:%S.%f'))
+        transaction.user = session.query(User).filter_by(
+            user_name=tran['user']).one()
+        for item in tran['items']:
+            temp_item = Item(name=item['name'], amount_in_cents=item['amount'])
+            temp_item.budget = session.query(Budget).filter_by(
+                name=item['budget']).one()
+            temp_item.transaction = transaction
+            session.add(temp_item)
 
 
 def add_users(data, session):

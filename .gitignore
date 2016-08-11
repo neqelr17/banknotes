@@ -87,3 +87,11 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# SQLite Database
+*.db
+*.sqlite3
+
+# Visio temp
+*.~vsd
+

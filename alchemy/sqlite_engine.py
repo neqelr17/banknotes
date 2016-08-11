@@ -49,11 +49,7 @@ def main():
 
     # Open up test data json and load data to database.
     if len(sys.argv) < 2:
-        with open(TEST_DATA, 'r') as fh_users:
-            data = json.load(fh_users)
-        with session_scope() as session:
-            add_users(data, session)
-            add_budgets(data, session)
+        insert_test_data()
 
 
 def insert_test_data():

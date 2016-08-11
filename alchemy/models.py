@@ -41,9 +41,9 @@ class User(BASE):
     salt = Column(String(40))
     password = Column(String(64))
 
-    def __init__(self, **kwds):
+    def __init__(self, *args, **kwargs):
         """Set created time on new objects."""
-        super().__init__(**kwds)
+        super().__init__(*args, **kwargs)
         self.created = datetime.datetime.utcnow()
         self.salt = self.create_salt()
         self.password = self.get_password(self.password)
@@ -128,7 +128,7 @@ class Budget(BASE):
     @property
     def budget_amount(self):
         """Return dollar budget_amount."""
-        return self.amount_in_cents / 100
+        return self.budget_amount_in_cents / 100
 
     @budget_amount.setter
     def budget_amount(self, budget_amount):

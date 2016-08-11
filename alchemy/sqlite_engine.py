@@ -83,7 +83,8 @@ def add_budgets(data, session):
         transaction.user = session.query(User).filter_by(
             user_name=tran['user']).one()
         for item in tran['items']:
-            temp_item = Item(name=item['name'], amount_in_cents=item['amount'])
+            temp_item = Item(name=item['name'])
+            temp_item.amount = item['amount']
             temp_item.budget = session.query(Budget).filter_by(
                 name=item['budget']).one()
             temp_item.transaction = transaction
